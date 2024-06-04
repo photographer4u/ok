@@ -74,7 +74,7 @@ def event_cards():
             st.session_state.water_conservation = max(0, st.session_state.water_conservation - 1)
         elif "Faucet" in selected_negative_event:
             st.session_state.water_conservation = max(0, st.session_state.water_conservation - 1)
-        elif "Water Conservation" in selected_negative_event:
+        elif "Water" in selected_negative_event:
             st.session_state.water_conservation = max(0, st.session_state.water_conservation - 1)
         st.session_state.player_tokens += 1
 
@@ -137,19 +137,19 @@ def goal_cards():
     selected_goal = st.selectbox("Select a Goal Card:", goals)
     if st.button("Complete Goal"):
         if selected_goal == "Reduce Emissions by 20% in 3 months.":
-            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
+            st.session_state.player_tokens -= 10
             st.success("Completed Goal: Reduced Emissions by 20%! Reduced Player Tokens by 10.")
         elif selected_goal == "Achieve Zero Waste in the office kitchen by next quarter.":
-            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
+            st.session_state.player_tokens -= 10
             st.success("Completed Goal: Achieved Zero Waste! Reduced Player Tokens by 10.")
         elif selected_goal == "Increase energy efficiency by 15% in 6 months.":
-            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
+            st.session_state.player_tokens -= 10
             st.success("Completed Goal: Increased energy efficiency! Reduced Player Tokens by 10.")
         elif selected_goal == "Implement a carpooling program to reduce transportation emissions by 25% in 4 months.":
-            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
+            st.session_state.player_tokens -= 10
             st.success("Completed Goal: Carpooling implemented! Reduced Player Tokens by 10.")
         elif selected_goal == "Reduce paper usage by 30% in 2 months.":
-            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
+            st.session_state.player_tokens -= 10
             st.success("Completed Goal: Paper usage reduced! Reduced Player Tokens by 10.")
 
 
