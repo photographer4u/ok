@@ -41,7 +41,8 @@ def calculate_carbon_footprint(data):
         "Waste": 0.1  # Placeholder value for waste emission factor
     }
     
-    total_emission = sum(data[key] * factor for key, factor in emission_factors.items())
+    # Calculate total emission for each activity and sum them up
+    total_emission = sum(data.get(key, 0) * factor for key, factor in emission_factors.items())
     return total_emission
 
 def main():
