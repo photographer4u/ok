@@ -32,14 +32,19 @@ def event_cards():
     positive_events = [
         "Green Commute Challenge: Track carpool or bike rides for a week to earn 1 Energy Savings token.",
         "Office Recycling Initiative: Set up a recycling program to earn 1 Recycling Point.",
-        "Water Conservation Effort: Implement water-saving measures to earn 1 Water Conservation token."
+        "Water Conservation Effort: Implement water-saving measures to earn 1 Water Conservation token.",
+        "Solar Panel Installation: Install solar panels on the office roof to reduce electricity consumption by 10% and earn 2 Energy Savings tokens.",
+        "Remote Work Week: Encourage employees to work from home for a week to reduce transportation emissions by 20% and earn 2 Transportation tokens.",
+        "Waste Audit: Conduct a waste audit to identify opportunities for waste reduction and earn 2 Recycling Points."
     ]
     negative_events = [
         "Unexpected Outage: Office building experiences a power outage. Lose 1 Energy Savings token.",
         "Waste Overflow: Office produces excess waste this week. Lose 1 Recycling Point.",
-        "Water Leak: Office experiences a water leak. Lose 1 Water Conservation token."
+        "Water Leak: Office experiences a water leak. Lose 1 Water Conservation token.",
+        "Fuel Price Surge: Fuel prices increase, leading to higher transportation costs and losing 1 Transportation token.",
+        "Paper Waste Increase: Paper usage in the office increases, leading to higher waste generation and losing 1 Recycling Point.",
+        "Broken Faucet: A broken faucet leads to water wastage, losing 1 Water Conservation token."
     ]
-    
     selected_positive_event = random.choice(positive_events)
     selected_negative_event = random.choice(negative_events)
     
@@ -111,7 +116,13 @@ def player_tokens():
 # Function for goal cards
 def goal_cards():
     st.write("### Goal Cards")
-    goals = ["Reduce Emissions by 20% in 3 months.", "Achieve Zero Waste in the office kitchen by next quarter."]
+    goals = [
+        "Reduce Emissions by 20% in 3 months.",
+        "Achieve Zero Waste in the office kitchen by next quarter.",
+        "Increase energy efficiency by 15% in 6 months.",
+        "Implement a carpooling program to reduce transportation emissions by 25% in 4 months.",
+        "Reduce paper usage by 30% in 2 months."
+    ]
     selected_goal = st.selectbox("Select a Goal Card:", goals)
     if st.button("Complete Goal"):
         if selected_goal == "Reduce Emissions by 20% in 3 months.":
