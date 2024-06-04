@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import math
 from pathlib import Path
+
 # Placeholder function for carbon footprint calculation
 def calculate_carbon_footprint(data):
     # Constants for emission factors (in kg CO2 equivalent per unit)
