@@ -4,200 +4,101 @@ import numpy as np
 import math
 from pathlib import Path
 import random
-import matplotlib.pyplot as plt
+import streamlit as st
+import random
 
-
-
-# Function to calculate carbon footprint
+# Placeholder function for carbon footprint calculation
 def calculate_carbon_footprint(data):
+    # Constants for emission factors (in kg CO2 equivalent per unit)
     emission_factors = {
-        "Electricity (kWh)": 0.0003,
-        "Transportation (miles)": 0.0004,
-        "Waste (tons)": 0.001
+        "Electricity (kWh)": 0.5,  # Placeholder value for electricity emission factor
+        "Transportation (miles)": 0.2,  # Placeholder value for transportation emission factor
+        "Waste (tons)": 0.1  # Placeholder value for waste emission factor
     }
-    total_emission = sum(data[key] * factor for key, factor in emission_factors.items())
+    
+    # Calculate total emission for each activity and sum them up
+    total_emission = sum(data.get(key, 0) * factor for key, factor in emission_factors.items())
     return total_emission
 
-# Function to generate a report
+# Placeholder function for setting goals
+def set_goals(goals):
+    # Placeholder function to simulate setting goals
+    st.write("Goals set successfully!")
+
+# Placeholder function for generating report
 def generate_report(data):
-    fig, ax = plt.subplots()
-    categories = list(data.keys())
-    values = list(data.values())
-    ax.bar(categories, values)
-    ax.set_xlabel('Categories')
-    ax.set_ylabel('Values')
-    ax.set_title('Carbon Footprint Report')
-    st.pyplot(fig)
+    # Generate bar chart for carbon footprint by activity
+    st.write("### Carbon Footprint by Activity")
+    st.bar_chart(data)
 
-# Function to handle event cards
-def event_cards():
-    st.header("Event Cards")
-    positive_events = [
+# Placeholder function for game elements
+def play_game():
+    st.write("### Play Game")
+    st.write("Welcome to the Digital Carbon Footprint Game!")
+    st.write("Here are some game elements to get you started:")
+    
+    # Event Cards
+    st.write("#### Event Cards:")
+    event_cards = [
         "Green Commute Challenge: Track carpool or bike rides for a week to earn Energy Savings tokens.",
-        "Implement Office Recycling Program: Earn Recycling Points.",
-        "Fix Leaks to Save Water: Earn Water Conservation Tokens."
+        "Unexpected Outage: Office building experiences a power outage. Emissions increase slightly this week. Lose 1 Energy Savings token."
     ]
-    negative_events = [
-        "Unexpected Outage: Office building experiences a power outage. Emissions increase slightly this week. Lose 1 Energy Savings token.",
-        "Increased Business Travel: Additional business trips increase your carbon footprint. Lose 1 token.",
-        "High Energy Consumption: Equipment left on overnight increases energy use. Lose 1 Energy Savings token."
-    ]
+    selected_event_card = st.selectbox("Select an Event Card:", event_cards)
 
-    if st.button("Draw Event Card"):
-        event_type = st.radio("Select Event Type", ["Positive", "Negative"])
-        if event_type == "Positive":
-            event = positive_events[st.session_state.positive_event_idx % len(positive_events)]
-            st.session_state.positive_event_idx += 1
-        else:
-            event = negative_events[st.session_state.negative_event_idx % len(negative_events)]
-            st.session_state.negative_event_idx += 1
-        st.write(event)
-        if "Green Commute Challenge" in event or "Implement Office Recycling Program" in event or "Fix Leaks to Save Water" in event:
-            if st.button("Complete Positive Event"):
-                st.session_state.energy_savings += 1
-                st.success("Completed Positive Event! Gained 1 Energy Savings token.")
-        else:
-            if st.button("Complete Negative Event"):
-                st.session_state.energy_savings = max(0, st.session_state.energy_savings - 1)
-                st.warning("Completed Negative Event. Lost 1 Energy Savings token.")
+    # Resource Tokens
+    st.write("#### Resource Tokens:")
+    energy_savings_tokens = st.slider("Energy Savings Tokens:", min_value=0, max_value=10, value=0)
+    recycling_points = st.slider("Recycling Points:", min_value=0, max_value=10, value=0)
+    water_conservation_tokens = st.slider("Water Conservation Tokens:", min_value=0, max_value=10, value=0)
 
-# Function to handle resource tokens
-def resource_tokens():
-    st.header("Resource Tokens")
-    st.write(f"Energy Savings: {st.session_state.energy_savings}")
-    st.write(f"Recycling Points: {st.session_state.recycling_points}")
-    st.write(f"Water Conservation Tokens: {st.session_state.water_conservation}")
+    # Challenges & Rewards
+    st.write("#### Challenges & Rewards:")
+    daily_challenge = st.checkbox("Daily Challenge: Reduce energy consumption by 5%")
+    if daily_challenge:
+        st.success("Congratulations! You completed the Daily Challenge.")
+        st.write("Earned 1 Energy Savings Token.")
+        energy_savings_tokens += 1
 
-# Function to handle challenges and rewards
-def challenges_and_rewards():
-    st.header("Challenges & Rewards")
-    challenges = [
-        "Daily Goal: Reduce energy consumption by 5%.",
-        "Weekly Goal: Participate in a carpool or bike to work.",
-        "Monthly Goal: Organize a recycling drive at the office."
-    ]
-    if st.button("Start Challenge"):
-        challenge = challenges[st.session_state.challenge_idx % len(challenges)]
-        st.session_state.challenge_idx += 1
-        st.write(challenge)
-        if st.button("Complete Challenge"):
-            st.session_state.energy_savings += 2
-            st.success("Completed Challenge! Gained 2 Energy Savings tokens.")
+    # Player Tokens
+    st.write("#### Player Tokens:")
+    total_tokens = energy_savings_tokens + recycling_points + water_conservation_tokens
+    st.write(f"Total Tokens: {total_tokens}")
 
-# Function to handle badges and rewards
-def badges_and_rewards():
-    st.header("Badges & Rewards")
-    badges = {
-        "Energy Saver Badge": 5,
-        "Recycling Champion Badge": 5,
-        "Water Conservation Badge": 5
-    }
-    for badge, price in badges.items():
-        st.write(f"{badge} - {price} tokens")
-        if st.button(f"Purchase {badge}"):
-            if st.session_state.energy_savings >= price:
-                st.session_state.energy_savings -= price
-                st.session_state.player_tokens += 10
-                st.success(f"Purchased {badge}! Player Tokens increased by 10.")
-            else:
-                st.warning("Not enough tokens to purchase this badge.")
-
-# Function to handle player tokens
-def player_tokens():
-    st.header("Player Tokens")
-    st.write(f"Player Tokens: {st.session_state.player_tokens}")
-
-# Function to handle goal cards
-def goal_cards():
-    st.header("Goal Cards")
+    # Goal Cards
+    st.write("#### Goal Cards:")
     goals = [
         "Reduce Emissions by 20% in 3 months.",
-        "Achieve Zero Waste in the office kitchen by next quarter.",
-        "Switch to Renewable Energy Sources",
-        "Organize a Sustainability Workshop",
-        "Achieve Paperless Office Status",
-        "Reduce Business Travel Emissions by 10%"
+        "Achieve Zero Waste in the office kitchen by next quarter."
     ]
-    selected_goal = st.selectbox("Select a Goal to Complete", goals)
-    if st.button("Complete Goal"):
-        if "Reduce Emissions by 20%" in selected_goal:
-            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
-            st.success("Completed Goal: Reduce Emissions by 20%! Reduced Player Tokens by 10.")
-        elif "Achieve Zero Waste" in selected_goal:
-            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
-            st.success("Completed Goal: Achieve Zero Waste! Reduced Player Tokens by 10.")
-        elif "Switch to Renewable Energy Sources" in selected_goal:
-            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
-            st.success("Completed Goal: Switch to Renewable Energy Sources! Reduced Player Tokens by 10.")
-        elif "Organize a Sustainability Workshop" in selected_goal:
-            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
-            st.success("Completed Goal: Organize a Sustainability Workshop! Reduced Player Tokens by 10.")
-        elif "Achieve Paperless Office Status" in selected_goal:
-            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
-            st.success("Completed Goal: Achieve Paperless Office Status! Reduced Player Tokens by 10.")
-        elif "Reduce Business Travel Emissions" in selected_goal:
-            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
-            st.success("Completed Goal: Reduce Business Travel Emissions by 10%! Reduced Player Tokens by 10.")
+    selected_goal = st.selectbox("Select a Goal Card:", goals)
 
-# Initialize session state
-if "player_tokens" not in st.session_state:
-    st.session_state.player_tokens = 50
-if "energy_savings" not in st.session_state:
-    st.session_state.energy_savings = 0
-if "recycling_points" not in st.session_state:
-    st.session_state.recycling_points = 0
-if "water_conservation" not in st.session_state:
-    st.session_state.water_conservation = 0
-if "positive_event_idx" not in st.session_state:
-    st.session_state.positive_event_idx = 0
-if "negative_event_idx" not in st.session_state:
-    st.session_state.negative_event_idx = 0
-if "challenge_idx" not in st.session_state:
-    st.session_state.challenge_idx = 0
-
-# Streamlit app layout
 def main():
     st.title("Digital Carbon Footprint Tracker")
     
-    # Carbon Footprint Calculator
-    st.header("Carbon Footprint Calculator")
-    electricity = st.number_input("Electricity (kWh)", min_value=0, value=0)
-    transportation = st.number_input("Transportation (miles)", min_value=0, value=0)
-    waste = st.number_input("Waste (tons)", min_value=0, value=0)
-    data = {"Electricity (kWh)": electricity, "Transportation (miles)": transportation, "Waste (tons)": waste}
-    
+    st.write("Enter data for different activities contributing to carbon emissions:")
+    data = {}
+    data["Electricity (kWh)"] = st.number_input("Electricity (kWh)", min_value=0.0, step=0.1)
+    data["Transportation (miles)"] = st.number_input("Transportation (miles)", min_value=0.0, step=0.1)
+    data["Waste (tons)"] = st.number_input("Waste (tons)", min_value=0.0, step=0.1)
+
     if st.button("Calculate Carbon Footprint"):
         total_emission = calculate_carbon_footprint(data)
-        st.write(f"Total Carbon Footprint: {total_emission:.2f} tons CO2")
-    
-    # Event Cards
-    event_cards()
-    
-    # Resource Tokens
-    resource_tokens()
-    
-    # Challenges & Rewards
-    challenges_and_rewards()
-    
-    # Badges & Rewards
-    badges_and_rewards()
-    
-    # Player Tokens
-    player_tokens()
-    
-    # Goal Cards
-    goal_cards()
-    
-    # Generate Report
-    st.header("Generate Report")
-    if st.button("Generate Report"):
-        generate_report(data)
-    
-    # Set Goals
-    st.header("Set Goals")
-    goals = st.text_input("Enter your goals:")
+        st.success(f"Total Carbon Footprint: {total_emission} kg CO2 equivalent")
+
+    st.write("### Set Goals")
+    goals = {}
+    goals["Reduce Electricity Consumption (%)"] = st.number_input("Reduce Electricity Consumption (%)", min_value=0.0, step=0.1)
+    goals["Reduce Transportation Emissions (%)"] = st.number_input("Reduce Transportation Emissions (%)", min_value=0.0, step=0.1)
+    goals["Reduce Waste Generation (%)"] = st.number_input("Reduce Waste Generation (%)", min_value=0.0, step=0.1)
     if st.button("Set Goals"):
         set_goals(goals)
 
+    st.write("### Generate Report")
+    if st.button("Generate Report"):
+        generate_report(data)
+
+    play_game()
+
 if __name__ == "__main__":
     main()
+
