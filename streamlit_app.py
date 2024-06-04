@@ -22,9 +22,9 @@ def set_goals(goals):
     st.write("Goals set successfully!")
 
 # Placeholder function for generating report
-def generate_report(data):
+def generate_report(data1, data2, data3):
     st.write("### Carbon Footprint by Activity")
-    st.bar_chart(data)
+    st.bar_chart(data1, data2, data3)
 
 # Function to simulate event cards
 def event_cards():
@@ -185,9 +185,9 @@ def main():
         set_goals(goals)
 
     st.write("### Generate Report")
-    datanew = [data[0]*0.5, data[1] * 0.2, data[2] * 0.1]
+    
     if st.button("Generate Report"):
-        generate_report(datanew) 
+        generate_report(data[0]*0.5, data[1] * 0.2, data[2] * 0.1) 
 
     st.write("## Game Elements")
     event_cards()
