@@ -5,6 +5,7 @@ import math
 from pathlib import Path
 import random
 
+
 # Placeholder function for carbon footprint calculation
 def calculate_carbon_footprint(data):
     # Constants for emission factors (in kg CO2 equivalent per unit)
@@ -29,46 +30,49 @@ def generate_report(data):
     st.write("### Carbon Footprint by Activity")
     st.bar_chart(data)
 
-# Placeholder function for game elements
-def play_game():
-    st.write("### Play Game")
-    st.write("Welcome to the Digital Carbon Footprint Game!")
-    st.write("Here are some game elements to get you started:")
-    
-    # Event Cards
-    st.write("#### Event Cards:")
-    event_cards = [
-        "Green Commute Challenge: Track carpool or bike rides for a week to earn Energy Savings tokens.",
-        "Unexpected Outage: Office building experiences a power outage. Emissions increase slightly this week. Lose 1 Energy Savings token."
-    ]
-    selected_event_card = st.selectbox("Select an Event Card:", event_cards)
+# Function to simulate event cards
+def event_cards():
+    st.write("### Event Cards")
+    event_options = ["Positive: Green Commute Challenge: Track carpool or bike rides for a week to earn Energy Savings tokens.",
+                     "Negative: Unexpected Outage: Office building experiences a power outage. Emissions increase slightly this week. Lose 1 Energy Savings token."]
+    event = random.choice(event_options)
+    st.write(f"Event Card: {event}")
 
-    # Resource Tokens
-    st.write("#### Resource Tokens:")
-    energy_savings_tokens = st.slider("Energy Savings Tokens:", min_value=0, max_value=10, value=0)
-    recycling_points = st.slider("Recycling Points:", min_value=0, max_value=10, value=0)
-    water_conservation_tokens = st.slider("Water Conservation Tokens:", min_value=0, max_value=10, value=0)
+# Function to handle resource tokens
+def resource_tokens():
+    st.write("### Resource Tokens")
+    energy_savings = st.number_input("Energy Savings Tokens:", min_value=0, max_value=10, step=1, value=0)
+    recycling_points = st.number_input("Recycling Points:", min_value=0, max_value=10, step=1, value=0)
+    water_conservation = st.number_input("Water Conservation Tokens:", min_value=0, max_value=10, step=1, value=0)
+    return energy_savings, recycling_points, water_conservation
 
-    # Challenges & Rewards
-    st.write("#### Challenges & Rewards:")
+# Function for challenges and rewards
+def challenges_and_rewards():
+    st.write("### Challenges & Rewards")
     daily_challenge = st.checkbox("Daily Challenge: Reduce energy consumption by 5%")
+    thematic_challenge = st.checkbox("Thematic Challenge: Plant a tree for Earth Day")
+    rewards = 0
     if daily_challenge:
-        st.success("Congratulations! You completed the Daily Challenge.")
-        st.write("Earned 1 Energy Savings Token.")
-        energy_savings_tokens += 1
+        st.success("Daily Challenge completed! Earned 1 Energy Savings Token.")
+        rewards += 1
+    if thematic_challenge:
+        st.success("Thematic Challenge completed! Earned 1 Recycling Point.")
+        rewards += 1
+    return rewards
 
-    # Player Tokens
-    st.write("#### Player Tokens:")
-    total_tokens = energy_savings_tokens + recycling_points + water_conservation_tokens
-    st.write(f"Total Tokens: {total_tokens}")
+# Function for player tokens
+def player_tokens():
+    st.write("### Player Tokens")
+    baseline_footprint = 100  # Example baseline footprint value
+    st.write(f"Baseline Carbon Footprint: {baseline_footprint} kg CO2 equivalent")
+    return baseline_footprint
 
-    # Goal Cards
-    st.write("#### Goal Cards:")
-    goals = [
-        "Reduce Emissions by 20% in 3 months.",
-        "Achieve Zero Waste in the office kitchen by next quarter."
-    ]
+# Function for goal cards
+def goal_cards():
+    st.write("### Goal Cards")
+    goals = ["Reduce Emissions by 20% in 3 months.", "Achieve Zero Waste in the office kitchen by next quarter."]
     selected_goal = st.selectbox("Select a Goal Card:", goals)
+    st.write(f"Selected Goal: {selected_goal}")
 
 def main():
     st.title("Digital Carbon Footprint Tracker")
@@ -95,7 +99,13 @@ def main():
     if st.button("Generate Report"):
         generate_report(data)
 
-    play_game()
+    # Integrate game elements
+    st.write("## Game Elements")
+    event_cards()
+    energy_savings, recycling_points, water_conservation = resource_tokens()
+    rewards = challenges_and_rewards()
+    baseline_footprint = player_tokens()
+    goal_cards()
 
 if __name__ == "__main__":
     main()
