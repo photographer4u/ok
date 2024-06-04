@@ -24,7 +24,8 @@ def set_goals(goals):
 # Placeholder function for generating report
 def generate_report(data1, data2, data3):
     st.write("### Carbon Footprint by Activity")
-    st.bar_chart(data1, data2, data3)
+    data = [data1, data2, data3]
+    st.bar_chart(data)
 
 # Function to simulate event cards
 def event_cards():
