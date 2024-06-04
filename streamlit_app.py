@@ -33,9 +33,9 @@ def main():
     
     st.write("Enter data for different activities contributing to carbon emissions:")
     data = {}
-    data["Electricity (kWh)"] = st.number_input("Electricity", min_value=0.0, step=0.1)
-    data["Transportation (miles)"] = st.number_input("Transportation", min_value=0.0, step=0.1)
-    data["Waste (tons)"] = st.number_input("Waste", min_value=0.0, step=0.1)
+    data["Electricity (kWh)"] = st.number_input("Electricity (kWh)", min_value=0.0, step=0.1)
+    data["Transportation (miles)"] = st.number_input("Transportation (miles)", min_value=0.0, step=0.1)
+    data["Waste (tons)"] = st.number_input("Waste (tons)", min_value=0.0, step=0.1)
 
     if st.button("Calculate Carbon Footprint"):
         total_emission = calculate_carbon_footprint(data)
