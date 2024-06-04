@@ -24,15 +24,9 @@ def set_goals(goals):
 
 # Placeholder function for generating report
 def generate_report(data):
-    # Placeholder function to simulate generating report
-    fig, ax = plt.subplots()
-    activities = list(data.keys())
-    emissions = list(data.values())
-    ax.bar(activities, emissions)
-    ax.set_xlabel('Activity')
-    ax.set_ylabel('Emissions (kg CO2 equivalent)')
-    ax.set_title('Carbon Footprint by Activity')
-    st.pyplot(fig)
+    # Generate bar chart for carbon footprint by activity
+    st.write("### Carbon Footprint by Activity")
+    st.bar_chart(data)
 
 def main():
     st.title("Digital Carbon Footprint Tracker")
