@@ -188,7 +188,7 @@ def main():
     st.write("### Generate Report")
     
     if st.button("Generate Report"):
-        generate_report(data[0]*0.5, data[1] * 0.2, data[2] * 0.1) 
+        generate_report(data["Electricity (kWh)"],data["Transportation (miles)"], data["Waste (tons)"] ) 
 
     st.write("## Game Elements")
     event_cards()
