@@ -185,8 +185,9 @@ def main():
         set_goals(goals)
 
     st.write("### Generate Report")
+    datanew = [data[0]*0.5, data[1] * 0.2, data[2] * 0.1]
     if st.button("Generate Report"):
-        generate_report(data)
+        generate_report(datanew) 
 
     st.write("## Game Elements")
     event_cards()
