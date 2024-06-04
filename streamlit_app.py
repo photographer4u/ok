@@ -30,19 +30,19 @@ def generate_report(data):
 def event_cards():
     st.write("### Event Cards")
     positive_events = [
-        "Green Commute Challenge: Track carpool or bike rides for a week to earn 1 Energy Savings token.",
-        "Office Recycling Initiative: Set up a recycling program to earn 1 Recycling Point.",
-        "Water Conservation Effort: Implement water-saving measures to earn 1 Water Conservation token.",
-        "Solar Panel Installation: Install solar panels on the office roof to reduce electricity consumption by 10% and earn 2 Energy Savings tokens.",
-        "Remote Work Week: Encourage employees to work from home for a week to reduce transportation emissions by 20% and earn 2 Transportation tokens.",
-        "Waste Audit: Conduct a waste audit to identify opportunities for waste reduction and earn 2 Recycling Points."
+        "Green Commute Challenge: Track carpool or bike rides for a week",
+        "Office Recycling Initiative: Set up a recycling program",
+        "Water Conservation Effort: Implement water-saving measures",
+        "Solar Panel Installation: Install solar panels on the office roof to reduce electricity consumption by 10%",
+        "Remote Work Week: Encourage employees to work from home for a week to reduce transportation emissions by 20%",
+        "Waste Audit: Conduct a waste audit to identify opportunities for waste reduction"
     ]
     negative_events = [
-        "Unexpected Outage: Office building experiences a power outage. Lose 1 Energy Savings token.",
-        "Waste Overflow: Office produces excess waste this week. Lose 1 Recycling Point.",
-        "Water Leak: Office experiences a water leak. Lose 1 Water Conservation token.",
-        "Paper Waste Increase: Paper usage in the office increases, leading to higher waste generation and losing 1 Recycling Point.",
-        "Broken Faucet: A broken faucet leads to water wastage, losing 1 Water Conservation token."
+        "Unexpected Outage: Office building experiences a power outage",
+        "Waste Overflow: Office produces excess waste this week",
+        "Water Leak: Office experiences a water leak",
+        "Paper Waste Increase: Paper usage in the office increases, leading to higher waste generatio",
+        "Broken Faucet: A broken faucet leads to water wastage"
     ]
     selected_positive_event = random.choice(positive_events)
     selected_negative_event = random.choice(negative_events)
@@ -68,6 +68,8 @@ def event_cards():
             st.session_state.energy_savings = max(0, st.session_state.energy_savings - 1)
         elif "Waste" in selected_negative_event:
             st.session_state.recycling_points = max(0, st.session_state.recycling_points - 1)
+        elif "Paper" in selected_negative_event:
+            st.session_state.recycling_points = max(0, st.session_state.recycling_points - 1)
         elif "Water Conservation" in selected_negative_event:
             st.session_state.water_conservation = max(0, st.session_state.water_conservation - 1)
         elif "Faucet" in selected_negative_event:
@@ -85,7 +87,7 @@ def resource_tokens():
 
 # Function for challenges and rewards
 def challenges_and_rewards():
-    st.write("### Challenges & Rewards")
+    st.write("### Challenges")
     daily_challenge = st.checkbox("Daily Challenge: Reduce energy consumption by 5%")
     thematic_challenge = st.checkbox("Thematic Challenge: Plant a tree for Earth Day")
     rewards = 0
@@ -99,19 +101,19 @@ def challenges_and_rewards():
 # Function to handle badges and rewards
 def badges_and_rewards():
     st.write("### Badges & Rewards")
-    badges = ["Energy Saver Badge", "Recycling Hero Badge", "Water Conservation Champion Badge"]
+    badges = ["Energy Saver Badge (5 Token)", "Recycling Hero Badge (10 Token)", "Water Conservation Champion Badge (15 Token)"]
     selected_badge = st.selectbox("Select a Badge to Purchase:", badges)
     if st.button("Purchase Badge"):
         if selected_badge == "Energy Saver Badge" and st.session_state.energy_savings >= 5:
             st.session_state.energy_savings -= 5
             st.session_state.player_tokens += 10
             st.success("Purchased Energy Saver Badge! Gained 10 Player Tokens.")
-        elif selected_badge == "Recycling Hero Badge" and st.session_state.recycling_points >= 5:
-            st.session_state.recycling_points -= 5
+        elif selected_badge == "Recycling Hero Badge" and st.session_state.recycling_points >= 10:
+            st.session_state.recycling_points -= 10
             st.session_state.player_tokens += 10
             st.success("Purchased Recycling Hero Badge! Gained 10 Player Tokens.")
-        elif selected_badge == "Water Conservation Champion Badge" and st.session_state.water_conservation >= 5:
-            st.session_state.water_conservation -= 5
+        elif selected_badge == "Water Conservation Champion Badge" and st.session_state.water_conservation >= 15:
+            st.session_state.water_conservation -= 15
             st.session_state.player_tokens += 10
             st.success("Purchased Water Conservation Champion Badge! Gained 10 Player Tokens.")
         else:
@@ -136,10 +138,21 @@ def goal_cards():
     if st.button("Complete Goal"):
         if selected_goal == "Reduce Emissions by 20% in 3 months.":
             st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
-            st.success("Completed Goal: Reduce Emissions by 20%! Reduced Player Tokens by 10.")
+            st.success("Completed Goal: Reduced Emissions by 20%! Reduced Player Tokens by 10.")
         elif selected_goal == "Achieve Zero Waste in the office kitchen by next quarter.":
             st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
-            st.success("Completed Goal: Achieve Zero Waste! Reduced Player Tokens by 10.")
+            st.success("Completed Goal: Achieved Zero Waste! Reduced Player Tokens by 10.")
+        elif selected_goal == "Increase energy efficiency by 15% in 6 months.":
+            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
+            st.success("Completed Goal: Increased energy efficiency! Reduced Player Tokens by 10.")
+        elif selected_goal == "Implement a carpooling program to reduce transportation emissions by 25% in 4 months.":
+            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
+            st.success("Completed Goal: Carpooling implemented! Reduced Player Tokens by 10.")
+        elif selected_goal == "Reduce paper usage by 30% in 2 months.":
+            st.session_state.player_tokens = max(0, st.session_state.player_tokens - 10)
+            st.success("Completed Goal: Paper usage reduced! Reduced Player Tokens by 10.")
+
+
 
 def main():
     if 'energy_savings' not in st.session_state:
