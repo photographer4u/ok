@@ -41,7 +41,6 @@ def event_cards():
         "Unexpected Outage: Office building experiences a power outage. Lose 1 Energy Savings token.",
         "Waste Overflow: Office produces excess waste this week. Lose 1 Recycling Point.",
         "Water Leak: Office experiences a water leak. Lose 1 Water Conservation token.",
-        "Fuel Price Surge: Fuel prices increase, leading to higher transportation costs and losing 1 Transportation token.",
         "Paper Waste Increase: Paper usage in the office increases, leading to higher waste generation and losing 1 Recycling Point.",
         "Broken Faucet: A broken faucet leads to water wastage, losing 1 Water Conservation token."
     ]
@@ -52,17 +51,27 @@ def event_cards():
     if st.button("Complete Positive Event"):
         if "Energy Savings" in selected_positive_event:
             st.session_state.energy_savings += 1
+        elif "Remote" in selected_positive_event:
+            st.session_state.energy_savings += 1
+        elif "Green" in selected_positive_event:
+            st.session_state.energy_savings += 1
         elif "Recycling" in selected_positive_event:
             st.session_state.recycling_points += 1
-        elif "Water Conservation" in selected_positive_event:
+        elif "Waste" in selected_positive_event:
+            st.session_state.recycling_points += 1
+        elif "Water" in selected_positive_event:
             st.session_state.water_conservation += 1
 
     st.write(f"Negative Event: {selected_negative_event}")
     if st.button("Complete Negative Event"):
-        if "Energy Savings" in selected_negative_event:
+        if "Outage" in selected_negative_event:
             st.session_state.energy_savings = max(0, st.session_state.energy_savings - 1)
-        elif "Recycling" in selected_negative_event:
+        elif "Waste" in selected_negative_event:
             st.session_state.recycling_points = max(0, st.session_state.recycling_points - 1)
+        elif "Water Conservation" in selected_negative_event:
+            st.session_state.water_conservation = max(0, st.session_state.water_conservation - 1)
+        elif "Faucet" in selected_negative_event:
+            st.session_state.water_conservation = max(0, st.session_state.water_conservation - 1)
         elif "Water Conservation" in selected_negative_event:
             st.session_state.water_conservation = max(0, st.session_state.water_conservation - 1)
         st.session_state.player_tokens += 1
