@@ -4,6 +4,8 @@ import numpy as np
 import math
 from pathlib import Path
 import random
+import matplotlib.pyplot as plt
+
 
 
 # Function to calculate carbon footprint
